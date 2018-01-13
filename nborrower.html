@@ -1,0 +1,124 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+<style>
+.search, #msg{
+      	text-align: center;
+		font-weight: bold;
+		font-size :150%;
+      }
+body{
+	background-image: url("curls.png");
+	color:white;
+}
+#loc
+{
+	text-align: center;
+	position:absolute;
+    top:150px;
+    left:300px;
+}
+header{
+	padding:14px 0px;
+        background-color: black;
+        clear: left;
+        text-align: left;
+        text-decoration:none;
+
+}
+#navbar a{
+	text-decoration:none;
+        padding:14px 16px;
+	margin:0;
+	color:white;
+}
+#navbar a:hover{
+background-color: silver;
+}
+#navbar .active{
+	background-color: silver;
+}
+</style>
+<script>
+function addborrower(ssn,name,add,phone)
+{
+	ssn=document.getElementById(ssn).value;
+	name=document.getElementById(name).value;
+	address=document.getElementById(add).value;
+	phone=document.getElementById(phone).value;
+	var s = /^[0-9]{3}\-[0-9]{2}\-[0-9]{4}$/;
+	var p = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+	var n = /^[a-zA-Z ]{2,30}$/;
+	if(ssn.length<=0||name.length<=0||address.length<=0||phone.length<=0)
+		alert("Some of the required details are missing!!!");
+	else if(!(s.test(ssn)))
+		alert("Please enter a valid SSN. (111-11-1111)");
+	else if(!(p.test(phone)))
+		alert("Please enter a valid phone number.(999-999-9999)");
+	else if(!(n.test(name)))
+		alert("Please enter a valid name.");
+	else
+	{
+		//keyword=ssn+"|"+name+"|"+address+"|"+phone;
+		var xmlhttp="";
+		if (window.XMLHttpRequest)
+		{
+			xmlhttp=new XMLHttpRequest();
+		}
+		else
+		{
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function()
+		{
+			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+				document.getElementById("srch").innerHTML=xmlhttp.responseText;
+			}
+		}
+		xmlhttp.open("GET","nborr.php?ssn="+ssn+"&name="+name+"&add="+address+"&phone="+phone,true);
+		xmlhttp.send();
+	}
+}
+</script>
+<div id="addborrower" >
+<body background="bor.jp" >
+<header id="navbar">
+	<a href="lib.html">SEARCH A BOOK</a>
+	<a href="nborrower.html" class="active">ADD BORROWER</a>
+	<a href="return.html">RETURN A BOOK</a>
+	<a href="#contact">FINES</a>
+</header>
+<form>
+	 <div class="form-row">
+	    <div class="form-group col-md-6" >
+	      <label for="ssn">SSN</label>
+	      <input type="text" class="form-control" name="ssn" id="ssn" placeholder="Enter SSN here">
+	    </div>
+	</div>
+	<div class="form-row">
+	    <div class="form-group col-md-6">
+	      <label for="borrower">Borrower</label>
+	      <input type="text" class="form-control" name="name" id="name" placeholder="Enter Borrowers Name here">
+	    </div>
+	  </div>
+	  <div class="form-row">
+	  <div class="form-group col-md-6">
+	    <label for="add">Address</label>
+	    <input type="text" class="form-control" id="add" name="address" placeholder="Road, Apt, City, State">
+		</div>
+	  </div>
+	  <div class="form-row">
+	    <div class="form-group col-md-6">
+	      <label for="phone">Phone</label>
+	      <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone Number here">
+	    </div>
+	  </div>
+	  <button type="button" class="btn btn-primary" onclick="addborrower('ssn','name','add','phone');">Add Borrower</button>
+	</form>
+	<div class="search" id="srch" style="padding-top:2%;width:100%"></div>
+</div
+
+</html>

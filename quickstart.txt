@@ -1,0 +1,10 @@
+-----------------------Quick Start Guide For LIBRARY MANAGEMENT SYSTEM-----------------------------------------------------------------
+After entering the url(localhost/pxm172730/library/lib.html)
+When you open the UI
+
+1)You can navigate to different pages through the navigation bar
+2)In the search page you can search the books.
+3)In the return book module you can retrn the book.
+4)In the fine module you can pay fines.
+5)In Add borrowers you can add borrowers.
+---------------x--------------------------x-------------------------------x-------------------------------x----------------------------- 

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+    integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+<script>
+function isValidDate(dateString)
+{
+    if(!/^\d{4}\-\d{2}\-\d{2}$/.test(dateString))
+        return false;
+	var parts = dateString.split("-");
+    var day = parseInt(parts[2], 10);
+    var month = parseInt(parts[1], 10);
+    var year = parseInt(parts[0], 10);
+	if(year < 1000 || year > 3000 || month <= 0 || month > 12)
+        return false;
+	var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+	if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+        monthLength[1] = 29;
+	return day > 0 && day <= monthLength[month -1];
+}
+function pay(x,y,z)
+{
+
+		var xmlhttp="";
+		if (window.XMLHttpRequest)
+		{
+			xmlhttp=new XMLHttpRequest();
+		}
+		else
+		{
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function()
+		{
+			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+				document.getElementById("srch").innerHTML=xmlhttp.responseText;
+			}
+		}
+		xmlhttp.open("GET","payment3.php?loan_id="+z,true);
+		xmlhttp.send();
+}
+function search()
+{
+	card_id=document.getElementById("card_id").value;
+	var xmlhttp="";
+	if (window.XMLHttpRequest)
+	{
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("srch").innerHTML=xmlhttp.responseText;
+		}
+	}
+   xmlhttp.open("GET","payment1.php?card_id="+card_id,true);
+   xmlhttp.send();
+}
+function update()
+{
+	var today = new Date();
+	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()-1);
+	var xmlhttp="";
+	if (window.XMLHttpRequest)
+	{
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("srch").innerHTML=xmlhttp.responseText;
+		}
+	}
+   xmlhttp.open("GET","payment2.php?date="+date,true);
+   xmlhttp.send();
+}
+</script>
+<style>
+body{
+	background-image: url("curls.png");
+	color:white;
+}
+.button {
+    display: block;
+    width: 115px;
+    height: 35px;
+    background: #4E9CAF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+	position:absolute;
+    top:10px;
+    right:10px;
+}
+.button1 {
+    display: block;
+    width: 115px;
+    height: 35px;
+    background: BLUE;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+	position:absolute;
+    top:10px;
+    right:130px;
+}
+ .pos
+  {
+     text-align: center;
+     position:absolute;
+     top:100px;
+     left:500px;
+  }
+.button2 {
+    display: block;
+    width: 115px;
+    height: 35px;
+    background: RED;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+	position:absolute;
+    top:10px;
+    right:255px;
+}
+.search_form
+{
+	 text-align: center;
+	 position:absolute;
+     top:400px;
+     right:500px;
+}
+ header{
+    padding:14px 0px;
+          background-color: black;
+          clear: left;
+          text-align: left;
+          text-decoration:none;
+
+  }
+  #navbar a{
+    text-decoration:none;
+          padding:14px 16px;
+    margin:0;
+    color:white;
+  }
+  #navbar a:hover{
+    background-color: silver;
+  }
+  #navbar .active{
+    background-color: silver;
+  }
+</style>
+<body>
+<header id="navbar">
+  	<a href="lib.html">SEARCH A BOOK</a>
+  	<a href="nborrower.html">ADD BORROWER</a>
+  	<a href="return.html" >RETURN A BOOK</a>
+  	<a href="pay.html" class="active">FINES</a>
+  </header>
+ <div id="mainDiv">
+    <div class="pos">
+      <input type="text" size="30" id="card_id" name="card_id" placeholder="Enter the Card ID" required>
+      <br><br>
+      <button type="button" class="btn btn-primary" onclick="search();">Get Fines</button>
+	  	<button type="button" class="btn btn-primary" onclick="update();">Update Fines</button>
+	    <div class="search" id="srch" style="padding-top:2%;width:100%"></div>
+    </div>
+    <div>
+			<div class="search" id="msg" style="padding-top:2%;display:none;width:100%"></div>
+		</div>
+  </div>
+
+</body>
+</html>
